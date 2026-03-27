@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mobile Katha — Your Phone's Best Friend</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1208;
+    --paper: #faf7f0;
+    --warm: #f5efe0;
+    --accent: #c8410a;
+    --accent2: #2a6d4f;
+    --muted: #8a7a62;
+    --border: #e0d5c0;
+    --card: #ffffff;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    font-size: 16px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: var(--paper);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 58px;
+  }
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px; font-weight: 700;
+    color: var(--ink); text-decoration: none;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .nav-logo span { color: var(--accent); font-style: italic; }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    font-size: 14px; font-weight: 500; color: var(--muted);
+    text-decoration: none; transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--accent); }
+  .nav-tag {
+    font-size: 12px; background: var(--accent);
+    color: white; padding: 4px 12px;
+    border-radius: 20px; font-weight: 500;
+  }
+
+  /* HERO */
+  .hero {
+    display: grid; grid-template-columns: 1fr 1fr;
+    min-height: 88vh;
+    border-bottom: 1px solid var(--border);
+  }
+  .hero-left {
+    padding: 5rem 3rem 5rem 4rem;
+    display: flex; flex-direction: column; justify-content: center;
+    border-right: 1px solid var(--border);
+  }
+  .hero-eyebrow {
+    font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--accent); font-weight: 500; margin-bottom: 1.5rem;
+  }
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.4rem, 4vw, 3.6rem);
+    line-height: 1.15; font-weight: 700;
+    margin-bottom: 1.5rem;
+  }
+  .hero-title em { color: var(--accent); font-style: italic; }
+  .hero-desc {
+    font-size: 17px; color: var(--muted);
+    max-width: 440px; margin-bottom: 2.5rem; line-height: 1.8;
+  }
+  .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--accent); color: white;
+    padding: 12px 28px; border-radius: 4px;
+    font-size: 14px; font-weight: 500;
+    text-decoration: none; border: none; cursor: pointer;
+    transition: background 0.2s, transform 0.15s;
+    display: inline-block;
+  }
+  .btn-primary:hover { background: #a8340a; transform: translateY(-1px); }
+  .btn-outline {
+    background: transparent; color: var(--ink);
+    padding: 12px 28px; border-radius: 4px;
+    font-size: 14px; font-weight: 500;
+    text-decoration: none; border: 1px solid var(--border); cursor: pointer;
+    transition: border-color 0.2s, transform 0.15s;
+    display: inline-block;
+  }
+  .btn-outline:hover { border-color: var(--ink); transform: translateY(-1px); }
+  .hero-right {
+    background: var(--warm);
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 4rem 3rem;
+    position: relative; overflow: hidden;
+  }
+  .hero-right::before {
+    content: '';
+    position: absolute; top: -60px; right: -60px;
+    width: 280px; height: 280px;
+    border-radius: 50%;
+    border: 1px solid var(--border);
+    opacity: 0.6;
+  }
+  .hero-right::after {
+    content: '';
+    position: absolute; bottom: -80px; left: -40px;
+    width: 200px; height: 200px;
+    border-radius: 50%;
+    border: 1px solid var(--border);
+    opacity: 0.4;
+  }
+  .welcome-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 2rem;
+    position: relative; z-index: 1;
+    animation: fadeUp 0.7s ease both;
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .welcome-card-tag {
+    display: inline-block;
+    font-size: 11px; text-transform: uppercase; letter-spacing: 0.12em;
+    color: var(--accent2); font-weight: 500;
+    border: 1px solid var(--accent2);
+    padding: 3px 10px; border-radius: 20px; margin-bottom: 1rem;
+  }
+  .welcome-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem; font-weight: 700; margin-bottom: 1rem;
+    line-height: 1.3;
+  }
+  .welcome-card p {
+    font-size: 15px; color: var(--muted); line-height: 1.75;
+    margin-bottom: 1rem;
+  }
+  .welcome-card p:last-of-type { margin-bottom: 1.5rem; }
+  .card-footer {
+    display: flex; align-items: center; justify-content: space-between;
+    padding-top: 1rem; border-top: 1px solid var(--border);
+    font-size: 13px; color: var(--muted);
+  }
+  .card-footer a { color: var(--accent); text-decoration: none; font-weight: 500; }
+
+  /* STATS */
+  .stats-bar {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    border-bottom: 1px solid var(--border);
+  }
+  .stat-item {
+    padding: 2rem;
+    border-right: 1px solid var(--border);
+    text-align: center;
+    animation: fadeUp 0.6s ease both;
+  }
+  .stat-item:last-child { border-right: none; }
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2rem; font-weight: 700; color: var(--accent);
+    display: block; margin-bottom: 4px;
+  }
+  .stat-label { font-size: 13px; color: var(--muted); }
+
+  /* SECTION */
+  section { padding: 5rem 4rem; }
+  .section-header {
+    display: flex; align-items: baseline; justify-content: space-between;
+    margin-bottom: 3rem;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 1.5rem;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.9rem; font-weight: 700;
+  }
+  .section-title span { color: var(--accent); font-style: italic; }
+  .section-link { font-size: 14px; color: var(--muted); text-decoration: none; }
+  .section-link:hover { color: var(--accent); }
+
+  /* POSTS GRID */
+  .posts-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px;
+    background: var(--border);
+    border: 1px solid var(--border);
+  }
+  .post-card {
+    background: var(--card); padding: 2rem;
+    transition: background 0.2s;
+    cursor: pointer;
+    text-decoration: none; color: var(--ink);
+    display: block;
+  }
+  .post-card:hover { background: var(--warm); }
+  .post-tag {
+    display: inline-block; font-size: 11px;
+    text-transform: uppercase; letter-spacing: 0.1em; font-weight: 500;
+    margin-bottom: 1rem;
+  }
+  .post-tag.tip { color: var(--accent2); }
+  .post-tag.storage { color: var(--accent); }
+  .post-tag.security { color: #5a3a9e; }
+  .post-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.15rem; font-weight: 700; line-height: 1.4;
+    margin-bottom: 0.75rem;
+  }
+  .post-card p { font-size: 14px; color: var(--muted); line-height: 1.7; margin-bottom: 1.25rem; }
+  .post-meta { font-size: 12px; color: var(--muted); }
+  .post-featured {
+    grid-column: span 2;
+  }
+  .post-featured h3 { font-size: 1.5rem; }
+
+  /* PITARA (AFFILIATE) */
+  .pitara-section {
+    background: var(--ink); color: var(--paper);
+  }
+  .pitara-section .section-title { color: var(--paper); }
+  .pitara-section .section-title span { color: #f5a623; }
+  .pitara-section .section-link { color: var(--muted); }
+  .pitara-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;
+  }
+  .pitara-card {
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 6px; padding: 1.75rem;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .pitara-card:hover { border-color: rgba(255,255,255,0.35); transform: translateY(-3px); }
+  .pitara-icon {
+    font-size: 28px; margin-bottom: 1rem; display: block;
+  }
+  .pitara-type {
+    font-size: 11px; text-transform: uppercase; letter-spacing: 0.12em;
+    color: rgba(255,255,255,0.4); font-weight: 500; margin-bottom: 0.5rem;
+  }
+  .pitara-card h4 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem; font-weight: 700; margin-bottom: 0.75rem;
+    color: var(--paper);
+  }
+  .pitara-card p { font-size: 14px; color: rgba(255,255,255,0.55); line-height: 1.7; margin-bottom: 1.25rem; }
+  .pitara-badge {
+    display: inline-block; font-size: 12px; font-weight: 500;
+    padding: 4px 12px; border-radius: 20px;
+    background: rgba(255,255,255,0.08);
+    color: rgba(255,255,255,0.6);
+    margin-bottom: 1rem;
+  }
+  .pitara-badge.free { background: rgba(42,109,79,0.3); color: #7ecfaa; }
+  .pitara-badge.paid { background: rgba(245,166,35,0.2); color: #f5c06a; }
+  .pitara-link {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 13px; font-weight: 500; color: #f5a623;
+    text-decoration: none;
+  }
+  .pitara-link:hover { text-decoration: underline; }
+
+  /* TIP OF THE DAY */
+  .tip-section {
+    background: var(--warm);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+  .tip-inner {
+    max-width: 640px; margin: 0 auto; text-align: center;
+  }
+  .tip-label {
+    font-size: 11px; text-transform: uppercase; letter-spacing: 0.15em;
+    color: var(--accent); font-weight: 500; margin-bottom: 1rem;
+    display: block;
+  }
+  .tip-inner blockquote {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.3rem, 2.5vw, 1.75rem);
+    line-height: 1.5; font-style: italic; font-weight: 400;
+    color: var(--ink); margin-bottom: 1rem;
+  }
+  .tip-inner cite { font-size: 13px; color: var(--muted); font-style: normal; }
+
+  /* ABOUT STRIP */
+  .about-strip {
+    display: grid; grid-template-columns: 1fr 1fr;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+  .about-left {
+    padding: 4rem; border-right: 1px solid var(--border);
+  }
+  .about-right {
+    padding: 4rem; background: var(--warm);
+    display: flex; flex-direction: column; justify-content: center;
+  }
+  .about-left h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem; font-weight: 700; margin-bottom: 1.25rem;
+    line-height: 1.2;
+  }
+  .about-left h2 em { color: var(--accent); font-style: italic; }
+  .about-left p { font-size: 15px; color: var(--muted); line-height: 1.8; margin-bottom: 1rem; }
+  .values-list { list-style: none; }
+  .values-list li {
+    font-size: 15px; padding: 0.75rem 0;
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: flex-start; gap: 10px;
+    color: var(--muted);
+  }
+  .values-list li::before {
+    content: '→'; color: var(--accent); font-weight: 500; flex-shrink: 0;
+  }
+
+  /* NEWSLETTER */
+  .newsletter {
+    padding: 4rem; text-align: center;
+    border-top: 1px solid var(--border);
+  }
+  .newsletter h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem; font-weight: 700; margin-bottom: 0.75rem;
+  }
+  .newsletter p { color: var(--muted); margin-bottom: 2rem; font-size: 16px; }
+  .newsletter-form {
+    display: flex; gap: 8px; justify-content: center;
+    max-width: 420px; margin: 0 auto;
+  }
+  .newsletter-form input {
+    flex: 1; padding: 11px 16px;
+    border: 1px solid var(--border); border-radius: 4px;
+    font-size: 14px; font-family: 'DM Sans', sans-serif;
+    background: white; color: var(--ink);
+    outline: none;
+  }
+  .newsletter-form input:focus { border-color: var(--accent); }
+  .newsletter-form button {
+    padding: 11px 24px;
+    background: var(--accent); color: white;
+    border: none; border-radius: 4px;
+    font-size: 14px; font-weight: 500;
+    cursor: pointer; font-family: 'DM Sans', sans-serif;
+    transition: background 0.2s;
+  }
+  .newsletter-form button:hover { background: #a8340a; }
+
+  /* FOOTER */
+  footer {
+    background: var(--ink); color: rgba(255,255,255,0.45);
+    padding: 2.5rem 4rem;
+    display: flex; align-items: center; justify-content: space-between;
+    font-size: 13px;
+  }
+  .footer-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px; font-weight: 700;
+    color: rgba(255,255,255,0.85);
+  }
+  .footer-logo span { color: #f5a623; font-style: italic; }
+  footer a { color: rgba(255,255,255,0.45); text-decoration: none; margin-left: 1.5rem; }
+  footer a:hover { color: rgba(255,255,255,0.85); }
+
+  /* MOBILE */
+  @media (max-width: 768px) {
+    nav { padding: 0 1.25rem; }
+    .nav-links { display: none; }
+    .hero { grid-template-columns: 1fr; min-height: auto; }
+    .hero-left { padding: 3rem 1.5rem; border-right: none; border-bottom: 1px solid var(--border); }
+    .hero-right { padding: 2.5rem 1.5rem; }
+    .stats-bar { grid-template-columns: 1fr; }
+    .stat-item { border-right: none; border-bottom: 1px solid var(--border); }
+    section { padding: 3rem 1.5rem; }
+    .posts-grid { grid-template-columns: 1fr; }
+    .post-featured { grid-column: span 1; }
+    .pitara-grid { grid-template-columns: 1fr; }
+    .about-strip { grid-template-columns: 1fr; }
+    .about-left { border-right: none; padding: 2.5rem 1.5rem; }
+    .about-right { padding: 2.5rem 1.5rem; }
+    .section-header { flex-direction: column; gap: 0.5rem; }
+    footer { flex-direction: column; gap: 1rem; text-align: center; padding: 2rem 1.5rem; }
+    footer a { margin: 0 0.75rem; }
+    .newsletter { padding: 3rem 1.5rem; }
+    .newsletter-form { flex-direction: column; }
+  }
+
+  /* ANIMATIONS */
+  .fade-in {
+    opacity: 0; transform: translateY(16px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#">Mobile <span>Katha</span></a>
+  <ul class="nav-links">
+    <li><a href="#tips">Tips</a></li>
+    <li><a href="#pitara">Digital Pitara</a></li>
+    <li><a href="#about">About</a></li>
+  </ul>
+  <span class="nav-tag">Meerut, UP</span>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-left">
+    <p class="hero-eyebrow">Your phone's best friend</p>
+    <h1 class="hero-title">Simple stories about your <em>smartphone</em></h1>
+    <p class="hero-desc">No jargon. No confusion. Just honest, friendly guides for everyday phone problems — written for real people in real life.</p>
+    <div class="hero-actions">
+      <a href="#tips" class="btn-primary">Read a Katha</a>
+      <a href="#pitara" class="btn-outline">Free Tools & Deals</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="welcome-card">
+      <span class="welcome-card-tag">Welcome Katha</span>
+      <h3>Welcome to Mobile Katha — your phone's best friend</h3>
+      <p>Do you ever feel like your phone is smarter than you? That it knows too much — but no one ever told you how it works?</p>
+      <p>You are not alone. Most of us got a smartphone before anyone explained what to do with it. That is exactly why Mobile Katha exists.</p>
+      <div class="card-footer">
+        <span>Mobile Katha · Meerut, UP</span>
+        <a href="#">Read more →</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- STATS -->
+<div class="stats-bar">
+  <div class="stat-item fade-in">
+    <span class="stat-num">100%</span>
+    <span class="stat-label">Jargon-free tips</span>
+  </div>
+  <div class="stat-item fade-in">
+    <span class="stat-num">Free</span>
+    <span class="stat-label">Tools recommended first</span>
+  </div>
+  <div class="stat-item fade-in">
+    <span class="stat-num">Phone</span>
+    <span class="stat-label">Friendly reading experience</span>
+  </div>
+</div>
+
+<!-- DAILY TIP -->
+<div class="tip-section" id="tips">
+  <section>
+    <div class="tip-inner">
+      <span class="tip-label">Tip of the Day</span>
+      <blockquote>"Clearing your phone's cache once a week is like giving it a short rest. It does not delete your photos — it just removes invisible junk that slows things down."</blockquote>
+      <cite>— Mobile Katha Daily Tip</cite>
+    </div>
+  </section>
+</div>
+
+<!-- RECENT KATHAS -->
+<section>
+  <div class="section-header fade-in">
+    <h2 class="section-title">Recent <span>Kathas</span></h2>
+    <a href="#" class="section-link">All posts →</a>
+  </div>
+  <div class="posts-grid">
+    <a class="post-card post-featured fade-in" href="#">
+      <span class="post-tag storage">Storage</span>
+      <h3>How to free up phone storage without deleting a single photo</h3>
+      <p>Your phone says "Storage Full" — but your photos folder looks empty to you. Here is the real reason this happens, and the free app that fixes it in three taps.</p>
+      <span class="post-meta">5 min read · Free tool inside</span>
+    </a>
+    <a class="post-card fade-in" href="#">
+      <span class="post-tag tip">Tip</span>
+      <h3>Why your phone slows down after two years — and the simple fix</h3>
+      <p>It is not old age. It is a setting that most people never turn off. Here is what it is and how to change it in 30 seconds.</p>
+      <span class="post-meta">3 min read</span>
+    </a>
+    <a class="post-card fade-in" href="#">
+      <span class="post-tag security">Security</span>
+      <h3>The one setting that protects your photos if your phone is ever lost</h3>
+      <p>Most people find out too late. This single setting takes 2 minutes to turn on and keeps your memories safe forever.</p>
+      <span class="post-meta">4 min read · Must-do</span>
+    </a>
+    <a class="post-card fade-in" href="#">
+      <span class="post-tag tip">Tip</span>
+      <h3>How to make your Jio internet faster without changing your plan</h3>
+      <p>A small DNS change on your phone makes a real difference on slow networks. No extra cost, no technical knowledge needed.</p>
+      <span class="post-meta">3 min read</span>
+    </a>
+    <a class="post-card fade-in" href="#">
+      <span class="post-tag storage">Storage</span>
+      <h3>WhatsApp is secretly eating your storage — here is how to stop it</h3>
+      <p>Every video that friends forward to you is saved automatically. Here is how to stop that and reclaim gigabytes of space today.</p>
+      <span class="post-meta">4 min read · Quick fix</span>
+    </a>
+  </div>
+</section>
+
+<!-- DIGITAL PITARA -->
+<section class="pitara-section" id="pitara">
+  <div class="section-header fade-in">
+    <h2 class="section-title">Digital <span>Pitara</span></h2>
+    <a href="#" class="section-link">All tools →</a>
+  </div>
+  <div class="pitara-grid">
+    <div class="pitara-card fade-in">
+      <span class="pitara-icon">📁</span>
+      <p class="pitara-type">Storage Tool</p>
+      <span class="pitara-badge free">Free</span>
+      <h4>Google Files</h4>
+      <p>Cleans junk, finds duplicate photos, and frees storage in one tap. The best free tool for anyone with a full phone.</p>
+      <a href="https://files.google.com" target="_blank" class="pitara-link">Get it free →</a>
+    </div>
+    <div class="pitara-card fade-in">
+      <span class="pitara-icon">💾</span>
+      <p class="pitara-type">Extra Storage</p>
+      <span class="pitara-badge paid">Affordable</span>
+      <h4>SanDisk OTG Pen Drive</h4>
+      <p>Plug into your Android phone via USB and transfer or backup files instantly. Works without WiFi, great for photos and videos.</p>
+      <a href="https://www.amazon.in/s?k=sandisk+otg+pendrive" target="_blank" class="pitara-link">Check price on Amazon →</a>
+    </div>
+    <div class="pitara-card fade-in">
+      <span class="pitara-icon">🔒</span>
+      <p class="pitara-type">Privacy & Security</p>
+      <span class="pitara-badge free">Free</span>
+      <h4>Proton VPN</h4>
+      <p>Keeps your browsing private on public WiFi at malls, airports, and hotels. The free plan works well for everyday use.</p>
+      <a href="https://protonvpn.com" target="_blank" class="pitara-link">Get free plan →</a>
+    </div>
+    <div class="pitara-card fade-in">
+      <span class="pitara-icon">🎨</span>
+      <p class="pitara-type">Design Tool</p>
+      <span class="pitara-badge free">Free</span>
+      <h4>Canva</h4>
+      <p>Make posters, invitations, and social media posts on your phone in minutes. No design experience needed at all.</p>
+      <a href="https://www.canva.com" target="_blank" class="pitara-link">Start free →</a>
+    </div>
+    <div class="pitara-card fade-in">
+      <span class="pitara-icon">🌐</span>
+      <p class="pitara-type">Web Hosting</p>
+      <span class="pitara-badge paid">Affordable</span>
+      <h4>Hostinger</h4>
+      <p>If you want to build your own website someday, this is the most affordable and beginner-friendly option available in India.</p>
+      <a href="https://www.hostinger.in" target="_blank" class="pitara-link">See plans →</a>
+    </div>
+    <div class="pitara-card fade-in">
+      <span class="pitara-icon">☁️</span>
+      <p class="pitara-type">Cloud Backup</p>
+      <span class="pitara-badge free">Free</span>
+      <h4>Google Photos</h4>
+      <p>Backs up every photo automatically. Search by face, place, or even what is in the photo. Never lose a memory again.</p>
+      <a href="https://photos.google.com" target="_blank" class="pitara-link">Set up free →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<div class="about-strip" id="about">
+  <div class="about-left">
+    <h2>Stories for people who use phones, not <em>engineers</em></h2>
+    <p>Mobile Katha was started because most tech content is written for people who already know tech. The explanations are too fast. The words are too complicated.</p>
+    <p>Here, every tip is told like a story. We start with a problem you actually face, explain why it happens in plain language, and show you a simple fix.</p>
+  </div>
+  <div class="about-right">
+    <ul class="values-list">
+      <li>Short paragraphs — easy to read on any phone screen</li>
+      <li>Every tip tested on budget Android phones</li>
+      <li>Free tools always recommended before paid ones</li>
+      <li>No sponsored content disguised as honest advice</li>
+      <li>Written for Meerut, UP — and everywhere like it</li>
+    </ul>
+  </div>
+</div>
+
+<!-- NEWSLETTER -->
+<div class="newsletter">
+  <h2>Get the next Katha in your inbox</h2>
+  <p>One useful tip per week. No spam. Unsubscribe anytime.</p>
+  <form class="newsletter-form" onsubmit="handleSubscribe(event)">
+    <input type="email" placeholder="your@email.com" required />
+    <button type="submit">Subscribe</button>
+  </form>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-logo">Mobile <span>Katha</span></span>
+  <div>
+    <a href="#">Tips</a>
+    <a href="#">Digital Pitara</a>
+    <a href="#">About</a>
+    <a href="#">GitHub</a>
+  </div>
+</footer>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+  function handleSubscribe(e) {
+    e.preventDefault();
+    const btn = e.target.querySelector('button');
+    btn.textContent = 'Subscribed!';
+    btn.style.background = '#2a6d4f';
+    setTimeout(() => { btn.textContent = 'Subscribe'; btn.style.background = ''; }, 3000);
+  }
+</script>
+</body>
+</html>
